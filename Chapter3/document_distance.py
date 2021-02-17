@@ -19,7 +19,7 @@ def document_distance_problem(s1,s2):
         for (k2,v2) in d2.items():
             if k1 == k2:
                 final_dot += v1*v2    
-    return final_dot
+    return (final_dot/(len(d1)*len(d2)))*100
 
 s1 = "abc dsahkhd sa s"
 s2 = "aslx abc sa sa z xsha"
