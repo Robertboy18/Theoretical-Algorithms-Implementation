@@ -3,15 +3,17 @@
 def single_1(A):
     l = '{:032b}'.format(0)
     l = [int(i) for i in l]
-    for i in A:
-        m = "{:032b}".format(i)
+    for i in nums:
+        m = "{:032b}".format(abs(i))
         for k in range(32):
-            l[k] = str(int(l[k]) +int(m[k]))
-    print(l)
+            l[k] = str(abs(int(l[k])) +abs(int(m[k])))
     for i in range(len(l)):
         l[i] = str(int(l[i])%3)
-    print(l)
-    return int("".join(l),2)
+    t = int("".join(l),2)
+    if nums.count(t) == 1:
+        return t
+    else:
+        return -t
 
 # 0(N) space and time
 def single_2(A):
