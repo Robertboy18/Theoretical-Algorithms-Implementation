@@ -1,5 +1,7 @@
 import sys
 def cutRod(arr,n):
+    # Time : O(2^n)
+    # Number of subsets = 2^(n-1)
     if n == 0:
         return 0
     q = -sys.maxsize
@@ -8,6 +10,8 @@ def cutRod(arr,n):
     return q
     
 def memoized_cut(arr,n):
+    # Top to down approach 
+    # 0(n^2)
     r = [i for i in range(n)]
     for i in range(n):
         r[i] = -sys.maxsize
@@ -26,6 +30,8 @@ def cutRod_memoized(arr,n,r):
     return q 
 
 def bottom_up_cut_rod(arr, n):
+    # Time : 0(n^2)
+    # use formulae : r_n = max_{1<=i<=n} (p[i] + r[n-i],p[n]) 
     r = [0 for x in range(n+1)]
     r[0] = 0
     for i in range(1, n+1):
