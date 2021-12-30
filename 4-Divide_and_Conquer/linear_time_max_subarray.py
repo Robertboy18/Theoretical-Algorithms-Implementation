@@ -1,7 +1,3 @@
-from _typeshed import IdentityFunction
-
-
-
 def linear_time(A):
     max_value = -10e10
     low, high = 0, 0
