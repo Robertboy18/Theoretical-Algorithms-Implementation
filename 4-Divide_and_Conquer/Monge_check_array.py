@@ -1,0 +1,2 @@
+def monge(A):
+    pass
