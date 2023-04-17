@@ -15,10 +15,10 @@ class LinkedList:
 	def merge(self, other_list):
 		current_node = self.head
 		other_node = other_list.head
-		
+
 		# Create a new linked list to hold the merged values
 		merged_list = LinkedList()
-		
+
 		while current_node is not None and other_node is not None:
 			if current_node.value < other_node.value:
 				merged_list.insert(current_node.value)
@@ -26,14 +26,14 @@ class LinkedList:
 			else:
 				merged_list.insert(other_node.value)
 				other_node = other_node.next_node
-		
+
 		# Add any remaining nodes from either list
 		while current_node is not None:
 			merged_list.insert(current_node.value)
 			current_node = current_node.next_node
-		
+
 		while other_node is not None:
 			merged_list.insert(other_node.value)
 			other_node = other_node.next_node
-		
+
 		return merged_list
