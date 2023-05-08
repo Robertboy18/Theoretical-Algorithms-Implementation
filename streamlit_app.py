@@ -47,5 +47,5 @@ else:
 
     # Display contents of selected Python file
     st.header(f"Contents of {file_index}")
-    with open(os.path.join(chapter_index, "python", file_index)) as f:
+    with open(os.path.join(chapter_index, "Python", file_index)) as f:
         st.code(f.read())
