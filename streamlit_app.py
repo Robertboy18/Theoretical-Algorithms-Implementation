@@ -38,8 +38,8 @@ chapters = get_chapters()
 chapter_index = st.selectbox("Select a chapter:", chapters)
 
 # Display list of Python files in selected chapter
-st.header(f"Python files in {chapter_index}")
-python_files = get_python_files(os.path.join(chapter_index, "python"))
+st.header(f"Algorithms in {chapter_index}")
+python_files = get_python_files(chapter_index)
 if len(python_files) == 0:
     st.write("No Python files found.")
 else:
