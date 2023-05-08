@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import regex as re
 
 # Set page title
 st.set_page_config(page_title="Introduction to Algorithms - Code Implementation")
