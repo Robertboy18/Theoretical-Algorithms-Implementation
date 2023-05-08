@@ -28,6 +28,18 @@ def get_python_files(folder):
     else:
         return []
 
+# Define function to clean up chapter titles
+def chapter_title(chapter_folder):
+    # Extract the chapter number and name
+    chapter_index, chapter_name = chapter_folder.split("-", 1)
+    # Remove leading/trailing whitespace and underscores
+    chapter_name = chapter_name.strip().replace("_", " ")
+    chapter_name = ''.join(filter(str.isalpha, chapter_name))
+    # Capitalize the chapter name
+    chapter_name = chapter_name.capitalize()
+    # Return the formatted chapter title
+    return f"{chapter_name} ({chapter_index})"
+
 
 # Display title
 st.title("Introduction to Algorithms - Code Implementation")
@@ -38,7 +50,8 @@ chapters = get_chapters()
 chapter_index = st.selectbox("Select a chapter:", chapters)
 
 # Display list of Python files in selected chapter
-st.header(f"Algorithms in {chapter_index}")
+chapter_title = chapter_title(chapter_index)
+st.header(f"Algorithms in {chapter_title}")
 python_files = get_python_files(chapter_index)
 if len(python_files) == 0:
     st.write("No Python files found.")
@@ -46,6 +59,6 @@ else:
     file_index = st.selectbox("Select a Python file:", python_files)
 
     # Display contents of selected Python file
-    st.header(f"Contents of {file_index}")
+    st.header(f"{file_index[20:]}")
     with open(os.path.join(file_index)) as f:
         st.code(f.read())
