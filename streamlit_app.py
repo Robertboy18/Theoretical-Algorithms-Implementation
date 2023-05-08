@@ -22,12 +22,12 @@ def get_chapters():
 
 # Define function to get all Python files in a folder
 def get_python_files(folder):
-    path = os.path.join(folder, "/Python")
-    print(path)
+    path = os.path.join(folder, "Python")
     if os.path.exists(path):
-        return [file for file in os.listdir(path) if file.endswith(".py")]
+        return [os.path.join(path, file) for file in os.listdir(path) if file.endswith(".py")]
     else:
         return []
+
 
 # Display title
 st.title("Introduction to Algorithms - Code Implementation")
