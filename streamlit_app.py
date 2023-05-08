@@ -2,8 +2,7 @@ import os
 import streamlit as st
 
 # Set page title
-st.set_page_config(page_title="Introduction to Algorithms - Code Implementation")
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Introduction to Algorithms - Code Implementation", layout="wide")
 
 # Define function to get all chapter folders in repository
 def get_chapters():
