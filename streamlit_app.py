@@ -65,5 +65,6 @@ else:
         st.code(f.read())
 
 
-# Acknowledgements
-st.header("Acknowledgements")
+# Contributers
+st.header("Contributers")
+st.write("This repository is maintained by [Robert Joseph George](https://github.com/Robertboy18)")
