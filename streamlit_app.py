@@ -35,9 +35,6 @@ def chapter_title(chapter_folder):
     chapter_index, chapter_name = chapter_folder.split("-", 1)
     # Remove leading/trailing whitespace and underscores
     chapter_name = chapter_name.strip().replace("_", " ")
-    chapter_name = ''.join(filter(str.isalpha, chapter_name))
-    # Capitalize the chapter name
-    chapter_name = ' '.join(word.capitalize() for word in chapter_name.split())
     # Return the formatted chapter title
     return f"{chapter_name}"
 
@@ -59,6 +56,5 @@ else:
     file_index = st.selectbox("Select a Python file:", original_files)
 
     # Display contents of selected Python file
-    st.header(f"{file_index[20:]}")
     with open(os.path.join(file_index)) as f:
         st.code(f.read())
