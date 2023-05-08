@@ -24,9 +24,11 @@ def get_chapters():
 def get_python_files(folder):
     path = os.path.join(folder, "Python")
     if os.path.exists(path):
-        return [os.path.join(path, file) for file in os.listdir(path) if file.endswith(".py")]
+        python_files = [file.replace("_", " ").replace(".py", "") for file in os.listdir(path) if file.endswith(".py")]
+        return python_files
     else:
         return []
+
 
 # Define function to clean up chapter titles
 def chapter_title(chapter_folder):
@@ -36,13 +38,12 @@ def chapter_title(chapter_folder):
     chapter_name = chapter_name.strip().replace("_", " ")
     chapter_name = ''.join(filter(str.isalpha, chapter_name))
     # Capitalize the chapter name
-    chapter_name = chapter_name.capitalize()
+    chapter_name = ' '.join(word.capitalize() for word in chapter_name.split())
     # Return the formatted chapter title
-    return f"{chapter_name} ({chapter_index})"
-
+    return f"{chapter_name}"
 
 # Display title
-st.title("Introduction to Algorithms - Code Implementation")
+st.title("CLRS (Introduction to Algorithms) - Python/C++/Java Implementation")
 
 # Display list of chapters
 st.header("Chapters")
