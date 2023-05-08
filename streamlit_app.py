@@ -25,10 +25,9 @@ def get_python_files(folder):
     path = os.path.join(folder, "Python")
     if os.path.exists(path):
         python_files = [file.replace("_", " ").replace(".py", "") for file in os.listdir(path) if file.endswith(".py")]
-        return python_files
+        return [os.path.join(path, file) for file in os.listdir(path) if file.endswith(".py")], python_files
     else:
         return []
-
 
 # Define function to clean up chapter titles
 def chapter_title(chapter_folder):
@@ -53,11 +52,11 @@ chapter_index = st.selectbox("Select a chapter:", chapters)
 # Display list of Python files in selected chapter
 chapter_title = chapter_title(chapter_index)
 st.header(f"Algorithms in {chapter_title}")
-python_files = get_python_files(chapter_index)
+original_files, python_files = get_python_files(chapter_index)
 if len(python_files) == 0:
     st.write("No Python files found.")
 else:
-    file_index = st.selectbox("Select a Python file:", python_files)
+    file_index = st.selectbox("Select a Python file:", original_files)
 
     # Display contents of selected Python file
     st.header(f"{file_index[20:]}")
