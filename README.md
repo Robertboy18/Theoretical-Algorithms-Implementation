@@ -23,7 +23,9 @@ Please ensure that your contribution is well documented and includes an explanat
 We would like to thank the authors of "Introduction to Algorithms" for providing an excellent textbook that has helped many students learn algorithms. We would also like to acknowledge the University of Alberta for providing Algorithm Courses 204 and 304 that have contributed to the additional algorithms in this repository.
 
 ## References
-Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). Introduction to Algorithms. The MIT Press.
+1. Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). Introduction to Algorithms. The MIT Press.
+2. Zachary Friggstad. CMPUT 304 - Algorithms 2, University of Alberta 
+3. Ehab Elmallah. CMPUT 204 - Algorithms 1, University of Alberta
 
 <hr>
 
