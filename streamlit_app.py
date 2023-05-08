@@ -10,20 +10,20 @@ def get_chapters():
     # Get all folders in current directory
     folders = os.listdir()
 
-    # Filter folders that start with a number
-    filtered_folders = []
-    for folder in folders:
-        if folder[0].isdigit():
-            filtered_folders.append(folder)
+    # Extract the chapter number from the folder name
+    def get_chapter_number(folder_name):
+        return int(folder_name.split('-')[0])
 
-    # Sort folders by chapter number
-    sorted_folders = sorted(filtered_folders)
+    # Filter folders that start with a number and sort by chapter number
+    filtered_folders = sorted([f for f in folders if f.startswith(tuple(map(str, range(10))))])
+    sorted_folders = sorted(filtered_folders, key=get_chapter_number)
 
     return sorted_folders
 
 # Define function to get all Python files in a folder
 def get_python_files(folder):
-    path = os.path.join(folder, "Python")
+    path = os.path.join(folder, "/Python")
+    print(path)
     if os.path.exists(path):
         return [file for file in os.listdir(path) if file.endswith(".py")]
     else:
