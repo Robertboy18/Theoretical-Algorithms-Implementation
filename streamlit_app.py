@@ -40,6 +40,12 @@ def chapter_title(chapter_folder):
 # Display title
 st.title("CLRS (Introduction to Algorithms) - Python/C++/Java Implementation")
 
+# Define repository details section
+st.write("## Repository Details")
+st.write("This repository is organized by chapter, with each chapter containing its corresponding algorithms. Each algorithm is accompanied by a detailed explanation and analysis of its time and space complexities.")
+st.write(f"Check out the source code and how to contribute at [GitHub](https://github.com/Robertboy18/Theoretical-Algorithms-Implementation).")
+st.write("---")  # Add a horizontal line to separate the repository details from the rest of the app
+
 # Display list of chapters
 st.header("Chapters")
 chapters = get_chapters()
@@ -57,3 +63,7 @@ else:
     # Display contents of selected Python file
     with open(os.path.join(file_index)) as f:
         st.code(f.read())
+
+
+# Acknowledgements
+st.header("Acknowledgements")
