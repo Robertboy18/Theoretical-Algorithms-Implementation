@@ -1,6 +1,5 @@
 import os
 import streamlit as st
-import regex as re
 
 # Set page title
 st.set_page_config(page_title="Introduction to Algorithms - Code Implementation")
@@ -11,13 +10,16 @@ def get_chapters():
     # Get all folders in current directory
     folders = os.listdir()
 
+    # Filter folders that start with a number
+    filtered_folders = []
+    for folder in folders:
+        if folder[0].isdigit():
+            filtered_folders.append(folder)
+
     # Sort folders by chapter number
-    chapter_regex = re.compile(r"^\d+-")
-    sorted_folders = sorted([folder for folder in folders if chapter_regex.match(folder)])
+    sorted_folders = sorted(filtered_folders)
 
-    # Return only folders that start with a number
-    return [folder for folder in sorted_folders if os.path.isdir(folder)]
-
+    return sorted_folders
 
 # Define function to get all Python files in a folder
 def get_python_files(folder):
