@@ -38,7 +38,7 @@ def chapter_title(chapter_folder):
     return f"{chapter_name}"
 
 # Display title
-st.title("CLRS (Introduction to Algorithms) - Python/C++/Java Implementation")
+st.title("CLRS (Introduction to Algorithms) - Code Implementation")
 
 # Define repository details section
 st.write("## Repository Details")
