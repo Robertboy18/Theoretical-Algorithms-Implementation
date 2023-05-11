@@ -61,15 +61,15 @@ st.header("Chapters")
 chapters = get_chapters()
 chapter_index = st.selectbox("Select a chapter:", chapters)
 
-chapter_title = chapter_title(chapter_index)
+chapter_title = get_chapter_title(chapter_index)
 # Display read me
 st.header(f"Outline of {chapter_title}")
 original_files, readme_files = get_readme_files(chapter_index)
 if len(readme_files) == 0:
     st.write("No Chapter Outline found.")
 else:
-    # Display contents of selected Python file
-    with open(os.path.join(chapter_index)) as f:
+    # Display contents of selected README file
+    with open(readme_files[0], "r", encoding="utf-8") as f:
         st.markdown(f.read())
 
 
