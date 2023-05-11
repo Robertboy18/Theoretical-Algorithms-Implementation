@@ -69,7 +69,7 @@ if len(readme_files) == 0:
     st.write("No Chapter Outline found.")
 else:
     # Display contents of selected README file
-    with open(readme_files[0], "r", encoding="utf-8") as f:
+    with open(original_files[0], "r", encoding="utf-8") as f:
         st.markdown(f.read())
 
 # Display list of Python files in selected chapter
