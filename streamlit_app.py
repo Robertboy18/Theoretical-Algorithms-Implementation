@@ -27,6 +27,16 @@ def get_python_files(folder):
         return [os.path.join(path, file) for file in os.listdir(path) if file.endswith(".py")], python_files
     else:
         return []
+    
+# Define function to get all README files in a folder
+def get_readme_files(folder):
+    path = os.path.join(folder)
+    if os.path.exists(path):
+        readme_files = [file.replace("_", " ").replace(".md", "") for file in os.listdir(path) if file.endswith("Readme.md")]
+        return [os.path.join(path, file) for file in os.listdir(path) if file.endswith("Readme.md")], readme_files
+    else:
+        return []
+
 
 # Define function to clean up chapter titles
 def chapter_title(chapter_folder):
@@ -51,8 +61,19 @@ st.header("Chapters")
 chapters = get_chapters()
 chapter_index = st.selectbox("Select a chapter:", chapters)
 
-# Display list of Python files in selected chapter
 chapter_title = chapter_title(chapter_index)
+# Display read me
+st.header(f"Outline of {chapter_title}")
+original_files, readme_files = get_readme_files(chapter_index)
+if len(readme_files) == 0:
+    st.write("No Chapter Outline found.")
+else:
+    # Display contents of selected Python file
+    with open(os.path.join(chapter_index)) as f:
+        st.markdown(f.read())
+
+
+# Display list of Python files in selected chapter
 st.header(f"Algorithms in {chapter_title}")
 original_files, python_files = get_python_files(chapter_index)
 if len(python_files) == 0:

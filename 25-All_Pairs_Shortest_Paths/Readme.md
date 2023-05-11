@@ -1,0 +1,27 @@
+In this chapter, we consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. As in Chapter 24, we are given a weighted, directed graph $G=(V, E)$ with a weight function $w: E \rightarrow \mathbb{R}$ that maps edges to real-valued weights. We wish to find, for every pair of vertices $u, v \in V$, a shortest (least-weight) path from $u$ to $v$, where the weight of a path is the sum of the weights of its constituent edges. We typically want the output in tabular form: the entry in $u$ 's row and $v$ 's column should be the weight of a shortest path from $u$ to $v$.
+
+We can solve an all-pairs shortest-paths problem by running a single-source shortest-paths algorithm $|V|$ times, once for each vertex as the source. If all edge weights are nonnegative, we can use Dijkstra's algorithm. If we use the linear-array implementation of the min-priority queue, the running time is $O\left(V^3+V E\right)=O\left(V^3\right)$. The binary min-heap implementation of the min-priority queue yields a running time of $O(V E \lg V)$, which is an improvement if the graph is sparse. Alternatively, we can implement the min-priority queue with a Fibonacci heap, yielding a running time of $O\left(V^2 \lg V+V E\right)$.
+
+If the graph has negative-weight edges, we cannot use Dijkstra's algorithm. Instead, we must run the slower Bellman-Ford algorithm once from each vertex. The resulting running time is $O\left(V^2 E\right)$, which on a dense graph is $O\left(V^4\right)$. In this chapter we shall see how to do better. We also investigate the relation of the all-pairs shortest-paths problem to matrix multiplication and study its algebraic structure.
+Unlike the single-source algorithms, which assume an adjacency-list representation of the graph, most of the algorithms in this chapter use an adjacencymatrix representation. (Johnson's algorithm for sparse graphs, in Section 25.3, uses adjacency lists.) For convenience, we assume that the vertices are numbered $1,2, \ldots,|V|$, so that the input is an $n \times n$ matrix $W$ representing the edge weights of an $n$-vertex directed graph $G=(V, E)$. That is, $W=\left(w_{i j}\right)$, where $$
+w_{i j}= \begin{cases}\text { the weight of directed edge }(i, j) & \text { if } i \neq j \text { and }(i, j) \in E \\ \infty & \text { if } i \neq j \text { and }(i, j) \notin E\end{cases}
+$$
+We allow negative-weight edges, but we assume for the time being that the input graph contains no negative-weight cycles.
+
+The tabular output of the all-pairs shortest-paths algorithms presented in this chapter is an $n \times n$ matrix $D=\left(d_{i j}\right)$, where entry $d_{i j}$ contains the weight of a shortest path from vertex $i$ to vertex $j$. That is, if we let $\delta(i, j)$ denote the shortestpath weight from vertex $i$ to vertex $j$ (as in Chapter 24 ), then $d_{i j}=\delta(i, j)$ at termination.
+
+To solve the all-pairs shortest-paths problem on an input adjacency matrix, we need to compute not only the shortest-path weights but also a predecessor matrix $\Pi=\left(\pi_{i j}\right)$, where $\pi_{i j}$ is NIL if either $i=j$ or there is no path from $i$ to $j$, and otherwise $\pi_{i j}$ is the predecessor of $j$ on some shortest path from $i$. Just as the predecessor subgraph $G_\pi$ from Chapter 24 is a shortest-paths tree for a given source vertex, the subgraph induced by the $i$ th row of the $\Pi$ matrix should be a shortest-paths tree with root $i$. For each vertex $i \in V$, we define the predecessor subgraph of $G$ for $i$ as $G_{\pi, i}=\left(V_{\pi, i}, E_{\pi, i}\right)$, where
+$$
+V_{\pi, i}=\left\{j \in V: \pi_{i j} \neq \mathrm{NIL}\right\} \cup\{i\}
+$$
+and
+$$
+E_{\pi, i}=\left\{\left(\pi_{i j}, j\right): j \in V_{\pi, i}-\{i\}\right\}
+$$
+If $G_{\pi, l}$ is a shortest-paths tree, then the following procedure, which is a modified version of the PRINT-PATH procedure from Chapter 22 , prints a shortest path from vertex $i$ to vertex $j$.
+
+### Chapter outline 
+
+Section 25.1 presents a dynamic-programming algorithm based on matrix multiplication to solve the all-pairs shortest-paths problem. Using the technique of "repeated squaring," we can achieve a running time of $\Theta\left(V^3 \lg V\right)$. Section 25.2 gives another dynamic-programming algorithm, the Floyd-Warshall algorithm, which runs in time $\Theta\left(V^3\right)$. Section 25.2 also covers the problem of finding the transitive closure of a directed graph, which is related to the all-pairs shortest-paths problem. Finally, Section 25.3 presents Johnson's algorithm, which solves the allpairs shortest-paths problem in $O\left(V^2 \lg V+V E\right)$ time and is a good choice for large, sparse graphs.
+
+Before proceeding, we need to establish some conventions for adjacency-matrix representations. First, we shall generally assume that the input graph $G=(V, E)$ has $n$ vertices, so that $n=|V|$. Second, we shall use the convention of denoting matrices by uppercase letters, such as $W, L$, or $D$, and their individual elements by subscripted lowercase letters, such as $w_{i j}, l_{i j}$, or $d_{i j}$. Some matrices will have parenthesized superscripts, as in $L^{(m)}=\left(l_{i j}^{(m)}\right)$ or $D^{(m)}=\left(d_{i j}^{(m)}\right)$, to indicate iterates. Finally, for a given $n \times n$ matrix $A$, we shall assume that the value of $n$ is stored in the attribute $A$.rows.
