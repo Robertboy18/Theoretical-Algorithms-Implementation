@@ -1,5 +1,6 @@
 import collections as c
 import unittest
+import math
 
 # Author: Robert Joseph
 
@@ -19,18 +20,22 @@ def document_distance_problem(s1, s2):
     t = s2.split()
     
     # Create dictionaries to store the word counts
-    d1 = dict(c.OrderedDict(c.Counter(l)))
-    d2 = dict(c.OrderedDict(c.Counter(t)))
-    
+    d1 = dict(c.Counter(l))
+    d2 = dict(c.Counter(t))
+
     # Compute the dot product of the two dictionaries
-    final_dot = 0
-    for (k1,v1) in d1.items():
-        for (k2,v2) in d2.items():
-            if k1 == k2:
-                final_dot += v1*v2
-    
-    # Divide by the product of the magnitudes to obtain the cosine similarity
-    return (final_dot/(len(d1)*len(d2)))*100
+    dot_product = 0
+    for word in d1.keys():
+        if word in d2:
+            dot_product += d1[word] * d2[word]
+
+    # Compute the magnitude of each dictionary
+    d1_magnitude = math.sqrt(sum(count**2 for count in d1.values()))
+    d2_magnitude = math.sqrt(sum(count**2 for count in d2.values()))
+
+    # Compute the cosine similarity
+    similarity = dot_product / (d1_magnitude * d2_magnitude)
+    return similarity * 100
 
 
 class TestDocumentDistanceProblem(unittest.TestCase):

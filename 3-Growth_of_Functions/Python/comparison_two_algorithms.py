@@ -1,5 +1,6 @@
 import time
 import sys
+import numpy as np
 import matplotlib.pyplot as plt
 
 # Author: Robert Joseph
@@ -11,18 +12,19 @@ def compare_algorithms(algo1, algo2, input_sizes):
     space2 = []
     
     for n in input_sizes:
+        list_values = np.random.randint(0, 100, n)
         # measure time complexity
         start_time = time.time()
-        algo1(n)
+        algo1(list_values)
         time1.append(time.time() - start_time)
         
         start_time = time.time()
-        algo2(n)
+        algo2(list_values)
         time2.append(time.time() - start_time)
         
         # measure space complexity
-        size1 = sys.getsizeof(algo1(n))
-        size2 = sys.getsizeof(algo2(n))
+        size1 = sys.getsizeof(algo1(list_values))
+        size2 = sys.getsizeof(algo2(list_values))
         space1.append(size1)
         space2.append(size2)
         

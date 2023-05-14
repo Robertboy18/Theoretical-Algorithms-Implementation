@@ -8,15 +8,19 @@ def linear_time(A):
     subarray sum of an array A in linear time.
     """
     # initialize variables
-    max_value = -float('inf')
+    max_value = A[0]
     low, high = 0, 0
-    final = 0
+    final = A[0]
     l = 0
     
     # iterate over each element of the array
-    for i in range(len(A)):
+    for i in range(1, len(A)):
         # add the current element to the running sum
-        final += A[i]
+        if final + A[i] > A[i]:
+            final += A[i]
+        else:
+            final = A[i]
+            l = i
         
         # if the running sum is greater than the current max value,
         # update the max value and the endpoints of the subarray
@@ -24,12 +28,6 @@ def linear_time(A):
             max_value = final
             low = l
             high = i
-        
-        # if the running sum is negative, reset it to zero and update
-        # the starting index of the subarray
-        if final < 0:
-            final = 0
-            l = i+1
     
     # return the endpoints of the maximum subarray and its sum
     return (low, high, max_value)
@@ -44,7 +42,7 @@ class TestLinearTime(unittest.TestCase):
 
         # Test with array A = [1, -2, 3, -4, 5, -6, 7, -8, 9]
         A = [1, -2, 3, -4, 5, -6, 7, -8, 9]
-        expected_output = (0, 8, 11)
+        expected_output = (0, 8, 16)
         self.assertEqual(linear_time(A), expected_output)
 
         # Test with array A = [-1, -2, -3, -4, -5, -6, -7, -8, -9]

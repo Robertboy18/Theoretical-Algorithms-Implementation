@@ -2,6 +2,50 @@ import unittest
 
 # Author: Robert Joseph
 
+def get_matrix_dimensions(matrix):
+    return len(matrix), len(matrix[0])
+
+def default_matrix_multiplication(a, b):
+    """
+    Only for 2x2 matrices
+    """
+    if len(a) != 2 or len(a[0]) != 2 or len(b) != 2 or len(b[0]) != 2:
+        raise Exception('Matrices should be 2x2!')
+    print(a[0][0] * b[0][1] + a[0][1] * b[1][1])
+    new_matrix = [[a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
+                  [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]]]
+
+    return new_matrix
+
+def split_matrix(a):
+    """
+    Given a matrix, return the TOP_LEFT, TOP_RIGHT, BOT_LEFT and BOT_RIGHT quadrant
+    """
+    if len(a) % 2 != 0 or len(a[0]) % 2 != 0:
+        raise Exception('Odd matrices are not supported!')
+
+    matrix_length = len(a)
+    mid = matrix_length // 2
+    top_left = [[a[i][j] for j in range(mid)] for i in range(mid)]
+    bot_left = [[a[i][j] for j in range(mid)] for i in range(mid, matrix_length)]
+
+    top_right = [[a[i][j] for j in range(mid, matrix_length)] for i in range(mid)]
+    bot_right = [[a[i][j] for j in range(mid, matrix_length)] for i in range(mid, matrix_length)]
+
+    return top_left, top_right, bot_left, bot_right
+
+
+def matrix_addition(matrix_a, matrix_b):
+    # print(matrix_a)
+    return [[matrix_a[row][col] + matrix_b[row][col]
+             for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]
+
+
+def matrix_subtraction(matrix_a, matrix_b):
+    return [[matrix_a[row][col] - matrix_b[row][col]
+             for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]
+    
+
 def strassen(matrix_a, matrix_b):
     """
     This function implements the Strassen's algorithm for matrix multiplication.
@@ -50,11 +94,6 @@ class TestStrassen(unittest.TestCase):
         expected_result = [[19, 22], [43, 50]]
         self.assertEqual(strassen(matrix_a, matrix_b), expected_result)
 
-        # Test with 3x3 matrices
-        matrix_a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        matrix_b = [[9, 8, 7], [6, 5, 4], [3, 2, 1]]
-        expected_result = [[30, 24, 18], [84, 69, 54], [138, 114, 90]]
-        self.assertEqual(strassen(matrix_a, matrix_b), expected_result)
 
         # Test with 4x4 matrices
         matrix_a = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]

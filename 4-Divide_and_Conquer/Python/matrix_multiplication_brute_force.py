@@ -7,15 +7,15 @@ def matrix_multiply(A, B):
     This function performs matrix multiplication between two matrices A and B.
     The time complexity of this function is O(n^3), where n is the size of the matrices.
     """
-    if len(A) != len(B):
+    if len(A[0]) != len(B):
         return False
     else:
         n = len(A)
-        C = [[0 for __ in range(n)] for j in range(n)]
+        m = len(B[0])
+        C = [[0 for __ in range(m)] for j in range(n)]
         for i in range(n):
-            for j in range(n):
-                C[i][j] = 0
-                for k in range(n):
+            for j in range(m):
+                for k in range(len(B)):
                     C[i][j] += A[i][k] * B[k][j]
         return C
 

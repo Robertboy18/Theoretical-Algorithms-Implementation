@@ -20,7 +20,7 @@ def sieve(n):
                 k.append(j)
                 
     # return the list of composite numbers and primes
-    return k, primes
+    return list(set(k)), primes
 
 
 class TestSieve(unittest.TestCase):

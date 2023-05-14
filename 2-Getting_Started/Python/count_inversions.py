@@ -62,7 +62,7 @@ class TestCountInversions(unittest.TestCase):
         A = [2, 4, 6, 1, 3, 5]
         p = 0
         r = len(A) - 1
-        self.assertEqual(count_inversions(A, p, r), 9)
+        self.assertEqual(count_inversions(A, p, r), 6)
 
         # Test with array [1, 2, 3, 4, 5, 6]
         A = [1, 2, 3, 4, 5, 6]

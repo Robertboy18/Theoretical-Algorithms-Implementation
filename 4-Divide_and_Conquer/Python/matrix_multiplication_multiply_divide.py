@@ -8,9 +8,9 @@ def matrix_partition(A, n1, k, l):
     starting at position (k, l).
     """
     A1 = []
-    for i in range(k, n1 + k):
+    for i in range(k, k+n1):
         row = []
-        for j in range(l, n1 + l):
+        for j in range(l, l+n1):
             row.append(A[i][j])
         A1.append(row)
     return A1
@@ -23,16 +23,17 @@ def matrix_multiply_divide(A, B):
     # time complexity: O(n^3), where n is the dimension of the input matrices
 
     # create a new matrix C to store the result
-    C = [[0 for __ in range(len(A))] for j in range(len(A))]
+    C = [[0 for __ in range(len(B[0]))] for j in range(len(A))]
 
     # base case: if the matrices are both 1x1, compute the product and return it
-    if len(A) == 1:
-        return A[0][0] * B[0][0]
+    if len(A) == 1 and len(B) == 1:
+        return [[A[0][0] * B[0][0]]]
 
     # otherwise, partition the matrices into smaller submatrices and recursively compute their product
     else:
         # determine the size of the submatrices
-        n1 = len(A) // 2
+        n = len(A)
+        n1 = n // 2
 
         # partition the matrices into submatrices
         A11 = matrix_partition(A, n1, 0, 0)
@@ -51,55 +52,14 @@ def matrix_multiply_divide(A, B):
         C22 = matrix_multiply_divide(A21, B12) + matrix_multiply_divide(A22, B22)
 
         # combine the submatrices into the final result
-        C = [[C11, C12], [C21, C22]]
+        for i in range(n1):
+            for j in range(n1):
+                C[i][j] = C11[i][j]
+                C[i][j+n1] = C12[i][j]
+                C[i+n1][j] = C21[i][j]
+                C[i+n1][j+n1] = C22[i][j]
 
         return C
-    
-def default_matrix_multiplication(a, b):
-    """
-    Only for 2x2 matrices
-    """
-    if len(a) != 2 or len(a[0]) != 2 or len(b) != 2 or len(b[0]) != 2:
-        raise Exception('Matrices should be 2x2!')
-    print(a[0][0] * b[0][1] + a[0][1] * b[1][1])
-    new_matrix = [[a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
-                  [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]]]
-
-    return new_matrix
-
-
-def matrix_addition(matrix_a, matrix_b):
-    # print(matrix_a)
-    return [[matrix_a[row][col] + matrix_b[row][col]
-             for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]
-
-
-def matrix_subtraction(matrix_a, matrix_b):
-    return [[matrix_a[row][col] - matrix_b[row][col]
-             for col in range(len(matrix_a[row]))] for row in range(len(matrix_a))]
-
-
-def split_matrix(a):
-    """
-    Given a matrix, return the TOP_LEFT, TOP_RIGHT, BOT_LEFT and BOT_RIGHT quadrant
-    """
-    if len(a) % 2 != 0 or len(a[0]) % 2 != 0:
-        raise Exception('Odd matrices are not supported!')
-
-    matrix_length = len(a)
-    mid = matrix_length // 2
-    top_left = [[a[i][j] for j in range(mid)] for i in range(mid)]
-    bot_left = [[a[i][j] for j in range(mid)] for i in range(mid, matrix_length)]
-
-    top_right = [[a[i][j] for j in range(mid, matrix_length)] for i in range(mid)]
-    bot_right = [[a[i][j] for j in range(mid, matrix_length)] for i in range(mid, matrix_length)]
-
-    return top_left, top_right, bot_left, bot_right
-
-
-def get_matrix_dimensions(matrix):
-    return len(matrix), len(matrix[0])
-
 
 class TestMatrixMultiply(unittest.TestCase):
     def test_matrix_multiply(self):

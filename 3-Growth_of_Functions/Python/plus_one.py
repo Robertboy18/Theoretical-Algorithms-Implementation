@@ -9,29 +9,15 @@ def plusOne(A):
     
     The time complexity of this function is O(n), where n is the length of the input array A. This is because the function iterates over each digit in the array at most once.
     """
-    c = 0
-    t = -1
-    choice = True
-    while choice:
-        c = A[t] % 10
-        if c == 9 and len(A) == -t:
-            # if the last digit is 9 and we've reached the left end of the array,
-            # insert a new digit 1 at the beginning of the array
-            A.insert(0,1)
-            choice = False
-        elif c != 9:
-            # if the last digit is not 9, simply add 1 to it and exit the loop
-            A[t] += 1
-            choice = False
-        else:
-            # if the last digit is 9, set it to 0 and continue with the next digit
-            A[t] = 0
-            t = t - 1
+    carry = 1
+    for i in range(len(A)-1, -1, -1):
+        A[i] += carry
+        carry = A[i] // 10
+        A[i] %= 10
 
-    # remove leading zeros
-    for i in range(len(A)):
-        if A[i] != 0:
-            return A[i:]
+    if carry:
+        A.insert(0, 1)
+
     return A
 
 

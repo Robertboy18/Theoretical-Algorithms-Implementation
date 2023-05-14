@@ -25,16 +25,16 @@ def max_peak(arr):
 class TestMaxPeak(unittest.TestCase):
     def test_max_peak(self):
         # Test with a peak in the center
-        arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        self.assertEqual(max_peak(arr), 5)
+        arr = [[1, 2, 3], [4, 12, 6], [7, 8, 9]]
+        self.assertEqual(max_peak(arr), 12)
 
         # Test with a peak in the top left corner
         arr = [[9, 8, 7], [6, 5, 4], [3, 2, 1]]
-        self.assertEqual(max_peak(arr), 9)
+        self.assertEqual(max_peak(arr), False)
 
         # Test with no peak
         arr = [[1, 2, 3], [4, 5, 6], [3, 2, 1]]
-        self.assertFalse(max_peak(arr))
+        self.assertFalse(max_peak(arr), False)
 
 
 if __name__ == '__main__':

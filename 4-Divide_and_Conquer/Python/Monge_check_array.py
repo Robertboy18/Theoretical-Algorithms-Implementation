@@ -30,12 +30,12 @@ class TestMonge(unittest.TestCase):
         self.assertTrue(monge(A))
 
     def test_monge_false(self):
-        # Test with a matrix that does not satisfy the Monge property
+        # Test with a matrix that does satisfy the Monge property
         A = [[10, 17, 13],
              [17, 22, 16],
              [24, 28, 22],
              [11, 13, 6]]
-        self.assertFalse(monge(A))
+        self.assertTrue(monge(A))
 
     def test_monge_single_row(self):
         # Test with a matrix that has only one row

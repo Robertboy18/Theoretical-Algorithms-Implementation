@@ -8,7 +8,7 @@ def maximum_difference(z):
     elements in a list z. If z has fewer than two elements, it returns None.
     """
     # initialize the maximum difference to a very small value
-    c = -99999999999999
+    c = -float('inf')
     
     # iterate over each pair of consecutive elements in z
     for i in range(1, len(z)):
@@ -31,7 +31,7 @@ class TestMaximumDifference(unittest.TestCase):
 
         # Test with a mixed list of numbers
         z = [1, 24, 5, 6, 7, 8, -232, 35, 5, 67]
-        self.assertEqual(maximum_difference(z), 256)
+        self.assertEqual(maximum_difference(z), 267)
 
 
 if __name__ == '__main__':

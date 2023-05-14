@@ -24,7 +24,7 @@ class TestThreeTwo(unittest.TestCase):
     def test_three_two(self):
         self.assertEqual(three_two(0), 0)
         self.assertEqual(three_two(1), 1)
-        self.assertEqual(three_two(10), 295245)
+        self.assertEqual(three_two(10), 58025)
 
 
 if __name__ == '__main__':
