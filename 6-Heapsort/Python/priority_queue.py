@@ -1,53 +1,70 @@
-# Author : Robert Joseph
-
+import unittest
 from queue import PriorityQueue
 
-class min_max_priority:
-    
-    def __init__(self):
-        self.q = PriorityQueue()
-        
-    def insert(self,priority_1,value):
-        self.q.put((priority_1,value))
+# Author: Robert Joseph
 
-    def maximum(self):
-        element = self.q.get()
-        self.q.put(element)
-        return element
-    
-    def extract_max(self):
-        return self.q.get()
-    
-    def increase_key(self,value,value_updated):
-        while self.q.qsize():
-            element = self.q.get()
-            if element[0] == value:
-                values = element[1]
-                break
-        final = (value_updated,values)
-        self.q.put(final)
-    
-    def convert_min(self):
-        length = self.q.qsize()
-        while length:
-            element = self.q.get()
-            final = (-element[0],element[1])
-            self.q.put(final)
-            length -= 1
-    
-    def size(self):
-        return self.q.qsize()
-    
-    def __repr__(self):
-        print(self.q)
-    
-pq = min_max_priority()
-pq.insert(1,3)
-pq.insert(4,4)
-pq.insert(10,4)
-pq.increase_key(1,2)
-print(pq.maximum())
-pq.insert(100,4)
-pq.convert_min()
-pq.__repr__()
-print(pq.extract_max())
+def min_max_priority_tests():
+    # Create a priority queue
+    pq = PriorityQueue()
+
+    # Insert elements with their priorities
+    pq.put((1, 3))
+    pq.put((4, 4))
+    pq.put((10, 4))
+
+    # Increase the priority of an element
+    # Find the element with the desired priority and update its value
+    while not pq.empty():
+        element = pq.get()
+        if element[0] == 1:
+            updated_element = (2, element[1])
+            break
+    pq.put(updated_element)
+
+    # Get the maximum element
+    maximum_element = pq.get()
+    print(maximum_element)
+
+    # Insert another element
+    pq.put((100, 4))
+
+    # Convert the priority queue to a min-max priority queue
+    length = pq.qsize()
+    while length:
+        element = pq.get()
+        converted_element = (-element[0], element[1])
+        pq.put(converted_element)
+        length -= 1
+
+    # Print the min-max priority queue
+    print(pq.queue)
+
+    # Extract the maximum element
+    extracted_element = pq.get()
+    print(extracted_element)
+
+
+class TestMinMaxPriority(unittest.TestCase):
+    def test_min_max_priority(self):
+        pq = PriorityQueue()
+        pq.put((1, 3))
+        pq.put((4, 4))
+        pq.put((10, 4))
+        
+        self.assertEqual(pq.get(), (1, 3))  # Check maximum element
+        
+        pq.put((100, 4))
+        
+        pq_converted = PriorityQueue()
+        while not pq.empty():
+            element = pq.get()
+            converted_element = (-element[0], element[1])
+            pq_converted.put(converted_element)
+        
+        self.assertEqual(pq_converted.queue, [(-10, 4), (-4, 4), (-1, 3)])  # Check converted min-max priority queue
+        
+        self.assertEqual(pq_converted.get(), (-10, 4))  # Check extracted maximum element
+
+
+if __name__ == '__main__':
+    unittest.main()
