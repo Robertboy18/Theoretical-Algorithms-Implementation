@@ -1,5 +1,15 @@
+# Author: Robert Joseph
+
+import unittest
+
 # Function to check if the given assignment satisfies the 3-SAT formula
 def checkSatisfiability(formula, assignment):
+    """
+    Checks if the given assignment satisfies the 3-SAT formula.
+    :param formula: The 3-SAT formula as a list of tuples.
+    :param assignment: The assignment of variables as a dictionary.
+    :return: True if the assignment satisfies the formula, False otherwise.
+    """
     # Loop through all the clauses in the formula
     for clause in formula:
         # If the clause is satisfied by the given assignment, continue to the next clause
@@ -15,6 +25,11 @@ def checkSatisfiability(formula, assignment):
 
 # Function to solve the 3-SAT problem using the DPLL algorithm
 def dpll(formula):
+    """
+    Solves the 3-SAT problem using the DPLL algorithm.
+    :param formula: The 3-SAT formula as a list of tuples.
+    :return: True if the formula is satisfiable, False otherwise.
+    """
     # Set of all the variables in the formula
     variables = set()
     # Loop through all the clauses in the formula
@@ -35,6 +50,13 @@ def dpll(formula):
 
 # Function to solve the 3-SAT problem recursively using the DPLL algorithm
 def dpllRecursive(formula, variables, assignment):
+    """
+    Solves the 3-SAT problem recursively using the DPLL algorithm.
+    :param formula: The 3-SAT formula as a list of tuples.
+    :param variables: The set of variables.
+    :param assignment: The current assignment of variables.
+    :return: True if the formula is satisfiable, False otherwise.
+    """
     # If all the variables have been assigned a value, check if the formula is satisfied
     if not variables:
         return checkSatisfiability(formula, assignment)
@@ -63,8 +85,33 @@ def dpllRecursive(formula, variables, assignment):
     # If both the assignments did not result in True, return False
     return False
 
-# Example 3-SAT formula
-formula = [
-    (1, 1, 2, 0, 3, 1),
-    (1, 0, 2, 1, 3, 0),
-    (1, 1, 2, 0
+
+class TestDPLL(unittest.TestCase):
+    def test_dpll(self):
+        # Test case 1: Unsatisfiable formula
+        formula = [
+            (1, 1, 2, 0, 3, 1),  # (x1 OR ~x2 OR x3)
+            (1, 0, 2, 1, 3, 0),  # (x1 OR x2 OR ~x3)
+            (1, 1, 2, 0, 3, 0)   # (x1 OR ~x2 OR ~x3)
+        ]
+        self.assertFalse(dpll(formula))
+
+        # Test case 2: Satisfiable formula
+        formula = [
+            (1, 0, 2, 0, 3, 1),  # (~x1 OR ~x2 OR x3)
+            (1, 1, 2, 1, 3, 0),  # (x1 OR x2 OR ~x3)
+            (1, 0, 2, 1, 3, 0)   # (~x1 OR x2 OR ~x3)
+        ]
+        self.assertTrue(dpll(formula))
+
+        # Test case 3: Satisfiable formula
+        formula = [
+            (1, 1, 2, 1, 3, 1),  # (x1 OR x2 OR x3)
+            (1, 0, 2, 0, 3, 1),  # (~x1 OR ~x2 OR x3)
+            (1, 0, 2, 1, 3, 1)   # (~x1 OR x2 OR x3)
+        ]
+        self.assertTrue(dpll(formula))
+
+
+if __name__ == '__main__':
+    unittest.main()
